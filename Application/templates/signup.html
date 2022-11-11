@@ -10,7 +10,7 @@
         <div class="login-container">
             <form action="{% url 'register' %}" method="post">
                 {% csrf_token %}
-                <img src="{% static 'images/logo.png' %}" class="avtar" alt="">
+                <img src="{% static 'images/logo.PNG' %}" class="avtar" alt="">
                 <h3>Welcome To Questions Practice</h3>
                 {% if messages %}
                     {% for message in messages %}
