@@ -29,7 +29,7 @@ def signup(request):
             newuser=NewUser.objects.create_user(username=username,email=e_mail,password=password,first_name=f_name.strip())
             newuser.save()
             messages.success(request,"You Account has been succesfully created")
-            return redirect('register')
+            return redirect('signin')
     return render(request,'signup.html')
 
 def signin(request):
