@@ -13,7 +13,7 @@
     <div class="login-container">
         <form action="{% url 'signin' %}" method="post">
             {% csrf_token %}
-            <img src="{% static 'images/logo.png' %}" class="avtar" alt="">
+            <img src="{% static 'images/logo.PNG' %}" class="avtar" alt="">
             {% if messages %}
                 {% for message in messages %}
                     <h3 class="message-alert">{{message}}</h3>
