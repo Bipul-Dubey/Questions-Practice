@@ -1,0 +1,45 @@
+{% extends 'base2.html' %}
+{% load static %}
+{% block title %}Subjective Question{% endblock title %}
+{% block head %}
+  <link rel="stylesheet" href="{% static 'css/subjque.css' %}">
+{% endblock head %}
+{% block body %}
+<div class="container mt-2">
+  <div class="row g-3">
+    <div class="col-sm-8">
+      <h2>Subjective Question</h2>
+      <ul class="list-group">
+        {% for question in questions %}
+        <li class="list-group-item"><a href="{% url 'selected_subjective_que' question.id %}" style="color:black;">
+          <pre>{{question}}</pre></a></li>
+        {% endfor %}
+      </ul>
+      <div class="mt-5">
+        <nav aria-label="Page navigation example">
+          <ul class="pagination justify-content-center">
+            {% if questions.has_previous  %}
+            <li class="page-item"><a class="page-link" href="?page={{questions.previous_page_number}}">Previous</a></li>
+            {% endif %}
+            <li class="page-item disabled"><a class="page-link">{{questions.number}}</a></li>
+            <li class="page-item disabled"><a class="page-link">of</a></li>
+            <li class="page-item disabled"><a class="page-link">{{questions.paginator.num_pages}}</a></li>
+            {% if questions.has_next %}
+            <li class="page-item"><a class="page-link" href="?page={{questions.next_page_number}}">Next</a></li>
+            {% endif %}
+          </ul>
+        </nav>
+      </div>
+    </div>
+
+    <div class="col">
+      <h2>Topic Wise</h2>
+      <ul>
+        {% for topic in topics %}
+        <li><a class="topic_wise" href="{% url 'topicsubjective' topic.id %}">{{topic}}</a></li>
+        {% endfor %}
+      </ul>
+    </div>
+  </div>
+</div>
+{% endblock body %}

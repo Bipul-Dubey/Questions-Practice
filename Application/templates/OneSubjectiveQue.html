@@ -1,0 +1,118 @@
+{% extends 'base2.html' %}
+{% load static %}
+{% load get_dict %}
+{% block title %}Subjective Question{% endblock title %}
+{% block head %}
+  <link rel="stylesheet" href="{% static 'css/subjque.css' %}">
+{% endblock head %}
+{% block body %}
+<div class="container-fluid mt-2">
+  <div class="row g-3">
+    <div class="col-sm-8">
+      <div class="">
+        <h2>Subjective Question</h2>
+        <ul class="list-group">
+          <li class="list-group-item">
+            <h5><pre>{{question}}</pre></h5>
+          </li>
+        </ul>
+      </div>
+
+
+      <div class="add-comment-div m-3">
+        <form action="{% url 'post_comment'%}" method="post">
+          {% csrf_token %}
+          <div class="form-group">
+            <textarea  name="comment" rows="5" style="width: 100%;" required></textarea>
+            <input type="hidden" name="questionID" value="{{question.id}}">
+            <input type="hidden" name="commentID" value="">
+          </div>
+          <button class="btn btn-primary btn-sm mb-3" type="submit" name="button">Add Comments</button>
+        </form>
+      </div>
+      {% comment %} comment part  {% endcomment %}
+      {% load humanize %}
+      <div class="container">
+        <h2>Comments ({{comments.count}})</h2>
+        {% for comment in comments %}
+        <div class="row p-3 m-2 border border-info">
+          <div class="col-md-2 "><img class="rounded mx-auto d-block w-50 m-2" src="{{comment.user.photo.url}}" alt="user image"></div>
+          <div class="col-md-10 ">by <strong>{{comment.user}}</strong> ({{ comment.timestamp | naturaltime }}) <br> {{comment}}</div>
+          <div class="likes">
+                      {% comment %} // if user is liked then show unlike {% endcomment %}
+            {% if user in comment.likes.all %}
+            <form class="float-end" action="{% url 'unlike_post' comment.id %}" method="post" >
+              Likes: {{comment.likes.count}}
+              {% csrf_token %}
+              <button type="submit" class="btn btn-danger btn-sm" name="comment_id" value="{{comment.id}}">UnLike</button>
+            </form>
+            {% else %}
+            <form class="float-end" action="{% url 'like_post' comment.id %}" method="post" >
+              Likes: {{comment.likes.count}}
+              {% csrf_token %}
+              <button type="submit" class="btn btn-primary btn-sm" name="comment_id" value="{{comment.id}}">Like</button>
+            </form>
+            {% endif %}
+
+          </div>
+          <div class="reply m-2">
+            <a class="btn btn-primary float-end m-2 btn-sm" data-bs-toggle="collapse" data-target="replybox{{comment.id}}" href="#replybox{{comment.id}}" role="button" aria-expanded="false" aria-controls="replybox{{comment.id}}">
+                Add Reply
+            </a>
+            <div class="collapse" id="replybox{{comment.id}}">
+              <div class="card card-body mt-2">
+                <form action="{% url 'post_comment'%}" method="post">
+                  {% csrf_token %}
+                  <div class="form-group">
+                    <textarea  name="comment" rows="5" cols="100" required></textarea>
+                    <input type="hidden" name="commentID" value="{{comment.id}}">
+                  </div>
+                  <input type="hidden" name="questionID" value="{{question.id}}">
+                  <button class="btn btn-primary btn-sm mb-3" type="submit" name="button">Reply</button>
+                </form>
+              </div>
+            </div>
+          </div>
+
+          <div class="row replies border border-secondary">
+            {% for reply in replyDict|get_val:comment.id %}
+            {% if reply %}
+            <div class="col-md-2"><img class="rounded mx-auto d-block w-50 m-2" src="{{reply.user.photo.url}}" alt="user image"></div>
+            <div class="col-md-10 ">by <strong>{{reply.user}}</strong> ({{ reply.timestamp | naturaltime }}) <br> {{reply}}</div>
+
+            <div class="likes float-end">
+              {% if user in reply.likes.all %}
+              <form class="float-end" action="{% url 'unlike_post' reply.id %}" method="post" >
+              Likes: {{reply.likes.count}}
+                {% csrf_token %}
+                <button type="submit" class="btn btn-danger btn-sm mb-2" name="comment_id" value="{{reply.id}}">UnLike</button>
+              </form>
+              {% else %}
+              <form class="float-end" action="{% url 'like_post' reply.id %}" method="post" >
+              Likes: {{reply.likes.count}}
+                {% csrf_token %}
+                <button type="submit" class="btn btn-primary btn-sm mb-2" name="comment_id" value="{{reply.id}}">Like</button>
+              </form>
+              {% endif %}
+            </div>
+            <hr>
+            {% endif %}
+            {% endfor %}
+          </div>
+        </div>
+        {% endfor %}
+      </div>
+    </div>
+
+
+    <div class="col">
+      <h2>Topic Wise</h2>
+      <ul>
+        {% for topic in topics %}
+        <li><a class="topic_wise" href="{% url 'topicsubjective' topic.id %}">{{topic}}</a></li>
+        {% endfor %}
+      </ul>
+    </div>
+  </div>
+</div>
+{% endblock body %}

@@ -1,0 +1,31 @@
+.logo{
+    color: white;
+    text-align: center;
+    font-family: 'Poppins', sans-serif;
+    font-weight:bolder;
+  }
+  .time-cls{
+    background-color: skyblue;
+    position:fixed;
+    margin: 0;
+  }
+  .main{
+    display: inline-flex;
+  }
+  #img-part{
+    display: inline-block;
+    position: fixed;
+    right: 0;
+  }
+.ques{
+  font-size: 1.3rem;
+  font-weight:500;
+  font-family: 'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif;
+}  
+@media screen and (max-width: 1000px){
+  .time-cls{
+    position: fixed;
+    margin-top: 47px;
+    color: red;
+  }
+}

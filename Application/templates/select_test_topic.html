@@ -1,0 +1,28 @@
+{% extends 'base2.html' %}
+{% block title %}Test Topic Selection{% endblock title %}
+{% block body %}
+<div class="container m-5">
+    <div class="row p-2">
+        <h2>Test Rules</h2>
+        <div style="color: rgb(217, 0, 255);">
+            <h4>&#8594; Test time 5 Minutes</h4>
+            <h4>&#8594; After 5 Minutes Test Automatically submitted</h4>
+            <h4>&#8594; Test Contain 10-15 questions on given topic</h4>
+            <h4>&#8594; After submit test result showen</h4>
+        </div>
+    </div>
+    <div class="row m-2">
+        <form action={% url 'select-topic' %} method="post">
+            {% csrf_token %}
+            <h4>Select Topic</h4>
+            <select class="form-select w-25 text-center" name="topic" onchange="showMe(this.value);">
+                {% for topic in topics %}
+                <option class="opt" name="q-type" value = "{{topic.id}}">{{topic}}</option>
+                {% endfor %}
+            </select>
+            <button class="btn btn-primary m-2" type="submit">Start Test</button>
+        </form>
+    </div>
+
+</div>
+{% endblock body %}

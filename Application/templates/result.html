@@ -1,0 +1,13 @@
+{% extends 'base2.html' %}
+{% block title %}Result{% endblock title %}
+{% block body %}
+    <div class="container mt-5">
+ 
+      <h4 class="card-text">Percentage: {{percent}}%</h4>
+      <h4 class="card-text">Time Taken: {{time}} mm:ss</h4>
+      <h4 class="card-text">Correct answers: {{correct}}</h4>
+      <h4 class="card-text">Incorrect answers: {{wrong}}</h4>
+      <h4 class="card-text">Total questions: {{total}}</h4>
+      <h5>All the best for next quiz!</h5>
+    </div>
+{% endblock body %}

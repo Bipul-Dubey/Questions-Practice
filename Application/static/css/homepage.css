@@ -1,0 +1,11 @@
+li a{
+    text-decoration: none;
+    color: black;
+  }
+.que{
+    font-size: 1.1rem;
+    font-weight: 500;
+}
+  .more_adr{
+    float: right;
+  }

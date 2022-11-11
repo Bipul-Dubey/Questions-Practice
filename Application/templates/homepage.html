@@ -1,0 +1,38 @@
+{% extends 'base2.html' %}
+{% load static %}
+{% block title %}Home{% endblock title %}
+{% block head %}
+<link rel="stylesheet" href="{% static 'css/homepage.css' %}">
+{% endblock head %}
+{% block body %}
+    <div class="container-fluid mt-2">
+      <div class="row g-3">
+        <div class="col-sm-6">
+          <h2>Latest MCQ Questions</h2>
+          <div class="">
+            <ul class="list-group">
+              {% for mcqQue in mcqquestions %}
+              <li class="list-group-item que">{{mcqQue.mcq_question}}</li>
+              {% endfor %}
+            </ul>
+            {% if mcqquestions %}
+            <a href="{% url 'allmcq' %}" class="more_adr">Check Out..</a>
+            {% endif %}
+          </div>
+        </div>
+        <div class="col-sm-6">
+          <h2>Latest Subjective Questions</h2>
+          <div class="">
+            <ul class="list-group">
+              {% for subques in subjectiveQuestion %}
+              <li class="list-group-item que"><a href="{% url 'selected_subjective_que' subques.id %}">{{subques.subj_question}}</a></li>
+              {% endfor %}
+            </ul>
+            {% if subjectiveQuestion %}
+            <a href="{% url 'subjective' %}" class="more_adr">Check Out..</a>
+            {% endif %}
+          </div>
+        </div>
+      </div>
+    </div>
+{% endblock body %}

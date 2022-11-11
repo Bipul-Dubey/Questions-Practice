@@ -1,0 +1,38 @@
+{% extends 'base2.html' %}
+{% block title %}Contact Us{% endblock title %}
+{% block body %}
+<div class="container mt-5 w-75">
+  <div class="form-div">
+    <form action="{% url 'contact' %}" method="post">
+      {% csrf_token %}
+      <div class="row justify-content-center">
+        <div class="col-lg-6 col-md-12">
+          <div class="mb-3">
+            <label for="exampleInputEmail1" class="form-label">Email address</label>
+            <input name="email" type="email" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp"
+              value="{{user.email}}" readonly>
+            <div id="emailHelp" class="form-text">We'll never share your email with anyone else.</div>
+          </div>
+          <div class="mb-3">
+            <label class="form-label">Username</label>
+            <input name="username" type="text" class="form-control" value="{{user.username}}" readonly>
+          </div>
+          <div class="mb-3">
+            <label class="form-label">Mobile Number</label>
+            <input name="number" type="number" class="form-control" value="{{user.mobile_number}}" readonly>
+          </div>
+        </div>
+      </div>
+      <div class="row justify-content-center">
+        <label class="form-label">Message</label>
+        <div class="form-floating">
+          <textarea name="message" class="form-control" placeholder="Leave a Message here" style="height: 100px; padding: 5px;"
+            required></textarea>
+        </div>
+      </div>
+
+      <button type="submit" class="btn btn-primary mt-2">Send Message</button>
+    </form>
+  </div>
+</div>
+{% endblock body %}

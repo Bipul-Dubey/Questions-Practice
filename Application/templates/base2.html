@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+  <head>
+    {% load static %}
+    <link rel="shortcut icon" href="#">
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <!-- bootstrap 5.2.1 -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.1/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-iYQeCzEYFbKjA/T2uDLTpkwGzCiq6soy8tYaI1GyVh/UjpbCx/TYkiZhlZB6+fzT" crossorigin="anonymous">
+    <!-- jquery -->
+    <script src="https://code.jquery.com/jquery-3.6.1.js" integrity="sha256-3zlB5s2uwoUzrXK3BT7AX3FyvojsraNFxCc2vC/7pNI=" crossorigin="anonymous"></script>
+    <!--Font Awesome-->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.2.0/css/all.min.css">
+    <title>{% block title %} {% endblock title %} | Question Practice</title>
+    {% block head %}{% endblock head %}
+    <link rel="stylesheet" href="{% static 'css/base2.css' %}">
+  </head>
+  <body>
+<!-- navbar -->
+<nav class="navbar navbar-expand-lg navbar-dark bg-primary">
+    <div class="container-fluid">
+      <label class="navbar-brand" href="#">
+        {% comment %} <img src="{% static 'images/index.png' %}" alt="Logo" width="30" height="24" class="d-inline-block align-text-top logo"> {% endcomment %}
+        Questions Practice
+      </label>
+  
+        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+        <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="nav-bar collapse navbar-collapse" id="navbarSupportedContent">
+        <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+            <li class="nav-item">
+            <a class="nav-link" aria-current="page" href="{% url 'home' %}"><i class="fa-solid fa-house icon"></i>Home</a>
+            </li>
+            <li class="nav-item">
+            <a class="nav-link" href="{% url 'profile' %}"><i class="fa-solid fa-user icon"></i>Profile</a>
+            </li>
+            <li class="nav-item">
+            <a class="nav-link" href="{% url 'allmcq' %}"><i class="fa-solid fa-list-check icon"></i> MCQ Questions</a>
+            </li>
+            <li class="nav-item">
+            <a class="nav-link" href="{% url 'subjective' %}"><i class="fa-solid fa-file-pen icon"></i> Subjective Questions</a>
+            </li>
+            <li class="nav-item">
+            <a class="nav-link" href="{% url 'select-topic' %}"><i class="fa-solid fa-brain icon"></i>Test</a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link" href="{% url 'contact' %}"><i class="fa-solid fa-message icon"></i>Contact Us</a>
+              </li>
+        </ul>
+        <form class="d-flex" role="search" method="post" action="{% url 'searching' %}">
+          {% csrf_token %}
+          <input name="searched_data" class="form-control me-2" type="search" placeholder="Search- Question,Topic" aria-label="Search" required>
+          <button class="btn btn-success" type="submit">Search</button>
+        </form>
+        {% if user.is_authenticated %}
+        <a href="{% url 'signout' %}"><button class="btn btn-light m-1" type="button" name="button">Logout</button></a>
+        {% endif %}
+      </div>
+    </div>
+    </nav>
+    {% for message in messages %}
+    <div class="alert alert-info text-center" role="alert">
+      <h4>{{message}}<h4>
+    </div>
+    {% endfor %}
+    {% block body %}{% endblock body %}
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.1/dist/js/bootstrap.bundle.min.js" integrity="sha384-u1OknCvxWvY5kfmNBILK2hRnQC3Pr17a+RTT6rIHI7NnikvbZlHgTPOOmMi466C8" crossorigin="anonymous"></script>
+  </body>
+</html>

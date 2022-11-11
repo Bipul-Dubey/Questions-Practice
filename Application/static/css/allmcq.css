@@ -1,0 +1,18 @@
+a.topic_wise {
+    text-decoration: none;
+}
+
+.Correct-Answer {
+    display: none;
+}
+
+.btn-small {
+    --bs-btn-padding-y: .25rem;
+    --bs-btn-padding-x: .5rem;
+    --bs-btn-font-size: .75rem;
+}
+
+ul label {
+    font-size: 115%;
+}
+
