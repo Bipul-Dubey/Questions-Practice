@@ -39,7 +39,7 @@ def signup(request):
             newuser=NewUser.objects.create_user(username=username,email=e_mail,password=password,first_name=f_name.strip())
             newuser.is_active=False
             newuser.save()
-            messages.success(request,"You Account has been succesfully created. Please Confirm Email to activate your account..")
+            messages.success(request,"Your Account has been succesfully created. We send confirmation mail.Please Confirm...")
 
             # welcome email
             subject="Welcome to Questions Practice..!!!"
