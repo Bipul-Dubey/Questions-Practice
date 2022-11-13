@@ -1,0 +1,11 @@
+{% autoescape off %}
+Welcome to Questions Practice Confirmation mail
+
+Hello {{name}}
+
+Please confrim your email by clicking on following link..
+
+Confirmation Link: http://{{domain}}{% url 'activate' uidb64=uid token=token %}
+
+Thank you...
+{% endautoescape %}

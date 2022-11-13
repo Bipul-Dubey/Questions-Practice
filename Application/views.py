@@ -12,6 +12,16 @@ from .models import NewUser
 from django.contrib import messages
 from django.contrib.auth import authenticate,login,logout
 from django.contrib.auth.decorators import login_required
+
+# email settings
+from Project import settings
+from django.core.mail import send_mail
+from django.core.mail import EmailMessage
+from django.contrib.sites.shortcuts import get_current_site
+from django.template.loader import render_to_string
+from django.utils.http import urlsafe_base64_encode,urlsafe_base64_decode
+from django.utils.encoding import force_bytes,force_str
+from . tokens import generate_token
 # Create your views here.
 def signup(request):
     if request.method=='POST':
@@ -27,10 +37,52 @@ def signup(request):
             return render(request,'signup.html')
         else:
             newuser=NewUser.objects.create_user(username=username,email=e_mail,password=password,first_name=f_name.strip())
+            newuser.is_active=False
             newuser.save()
-            messages.success(request,"You Account has been succesfully created")
+            messages.success(request,"You Account has been succesfully created. Please Confirm Email to activate your account..")
+
+            # welcome email
+            subject="Welcome to Questions Practice..!!!"
+            message=f'Hello {f_name}..!!\n\n Welcoome \n\n We also sent you confirmation email. \n\n Please confirm Your Email to activate your account.'
+            from_email=settings.EMAIL_HOST_USER
+            to_list=[e_mail]
+            send_mail(subject,message,from_email,to_list,fail_silently=True)
+
+            # email confirmation
+            current_site=get_current_site(request)
+            email_subject="Confirm your email @ Questions Practice"
+            message2=render_to_string('email_confirmation.html',{
+                'name':newuser.first_name,
+                'domain':current_site.domain,
+                'uid':urlsafe_base64_encode(force_bytes(newuser.pk)),
+                'token':generate_token.make_token(newuser)
+            })
+
+            mail=EmailMessage(
+                email_subject,
+                message2,
+                settings.EMAIL_HOST_USER,
+                [newuser.email]
+            )        
+            mail.fail_silently=True
+            mail.send()
+
             return redirect('signin')
     return render(request,'signup.html')
+
+def activate(request,uidb64,token):
+    try:
+        uid=force_str(urlsafe_base64_decode(uidb64))
+        myuser=NewUser.objects.get(pk=uid)
+    except (TypeError,ValueError,OverflowError,NewUser.DoesNotExist):
+        myuser=None
+    if myuser is not None and generate_token.check_token(myuser,token):
+        myuser.is_active=True
+        myuser.save()
+        messages.info(request,'Account Activated,Now Sign in..')
+        return redirect('signin')
+    else:
+        return render(request,'activation_fail.html')
 
 def signin(request):
     if request.method=='POST':
