@@ -15,7 +15,7 @@
       <div class="px-3">
         <hr>
         <ul>
-          <label for="">{{question}}</label>
+          <label for="">{{ forloop.counter }}. {{question}}</label>
           {% for option in question.mcq_question_optn.all %}
           <li>{{option}}</li>
           {% endfor %}

@@ -12,7 +12,7 @@
           <div class="">
             <ul class="list-group">
               {% for mcqQue in mcqquestions %}
-              <li class="list-group-item que">{{mcqQue.mcq_question}}</li>
+              <li class="list-group-item que">{{ forloop.counter }}. {{mcqQue.mcq_question}}</li>
               {% endfor %}
             </ul>
             {% if mcqquestions %}
@@ -25,7 +25,7 @@
           <div class="">
             <ul class="list-group">
               {% for subques in subjectiveQuestion %}
-              <li class="list-group-item que"><a href="{% url 'selected_subjective_que' subques.id %}">{{subques.subj_question}}</a></li>
+              <li class="list-group-item que">{{ forloop.counter }}. <a href="{% url 'selected_subjective_que' subques.id %}">{{subques.subj_question}}</a></li>
               {% endfor %}
             </ul>
             {% if subjectiveQuestion %}

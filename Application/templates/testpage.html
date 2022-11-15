@@ -28,7 +28,7 @@
         {% csrf_token %}
         {% for question in questions %}
       <div class="p-5 w-50">
-        <span class="ques">{{question}}</span>
+        <span class="ques">{{ forloop.counter }}. {{question}}</span>
         {% for option in question.mcq_question_optn.all %}
         <div class="form-check">
             <input class="form-check-input" type="radio" value="{{option}}" name="{{question}}" id="flexCheckDefault{{forloop.counter}}">
