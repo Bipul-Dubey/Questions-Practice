@@ -7,6 +7,7 @@ from django.urls import reverse
 
 from random import sample,randint
 from django.core.paginator import Paginator
+import re
 
 from .models import NewUser
 from django.contrib import messages
@@ -34,6 +35,21 @@ def signup(request):
             return render(request,'signup.html')
         if NewUser.objects.filter(email=e_mail):
             messages.warning(request,'Email already registred')
+            return render(request,'signup.html')
+        if len(password)<6:
+            messages.warning(request,'password at least 6 characters long')
+            return render(request,'signup.html')
+        if re.search(r'[!@#$^_*]', password) is None:
+            messages.warning(request,'password must contain at least one special symbol')
+            return render(request,'signup.html')
+        if re.search(r'\d', password) is None:
+            print('password must contain at least one digit')
+            return render(request,'signup.html')
+        if re.search('[A-Z]', password) is None:
+            messages.warning(request,'password must contain one capital letter')
+            return render(request,'signup.html')
+        elif re.search('[a-z]', password) is None:
+            messages.warning('password must contain one capital letter')
             return render(request,'signup.html')
         else:
             newuser=NewUser.objects.create_user(username=username,email=e_mail,password=password,first_name=f_name.strip())
@@ -405,6 +421,22 @@ def update_profile(request):
             if request.POST['DOB']:
                 updateuser.date_of_birth=request.POST['DOB']
             if request.POST.get('password'):
+                password=request.POST.get('password')
+                if len(password)<6:
+                    messages.warning(request,'password at least 6 characters long')
+                    return redirect('updateProfile')
+                if re.search(r'[!@#$^_*]', password) is None:
+                    messages.warning(request,'password must contain at least one special symbol')
+                    return redirect('updateProfile')
+                if re.search(r'\d', password) is None:
+                    print('password must contain at least one digit')
+                    return redirect('updateProfile')
+                if re.search('[A-Z]', password) is None:
+                    messages.warning(request,'password must contain one capital letter')
+                    return redirect('updateProfile')
+                elif re.search('[a-z]', password) is None:
+                    messages.warning('password must contain one capital letter')
+                    return redirect('updateProfile')
                 updateuser.set_password=request.POST.get('password')
             if len(request.FILES)!=0:
                 updateuser.photo=request.FILES['profilepic']

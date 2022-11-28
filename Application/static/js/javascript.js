@@ -103,14 +103,6 @@ function validate(){
       pass_space.style.display="none";
       space=true
     }
-  
-    let button=document.getElementById('subbtn');
-    if(u && lw && s && n && l && space){
-      button.disabled=false;
-    }
-    else{
-      button.disabled=true;
-    }
 }
 
 var state=false;
