@@ -30,8 +30,8 @@ def signup(request):
         e_mail=request.POST['email']
         username=request.POST['username']
         password=request.POST['password']
-        if not bool(re.match("^[A-Za-z0-9_]*$", username) and len(username)<6):
-            messages.warning(request,'Username Contains A-Z,a-z,0-9,_')
+        if (not bool(re.match("^[A-Za-z0-9_]*$", username)) and len(username)<6):
+            messages.warning(request,'Username Contains A-Z,a-z,0-9,_ and aleast 6 characters')
             return render(request,'signup.html')
         if NewUser.objects.filter(username=username):
             messages.warning(request,"Username Already exists!!")
