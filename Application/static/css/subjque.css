@@ -2,6 +2,7 @@ a{
     text-decoration:none;
   }
   pre{
+    display: inline-flex;
     padding:0;
     margin:0;
     font-size:1.1rem;

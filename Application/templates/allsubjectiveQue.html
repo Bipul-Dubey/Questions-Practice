@@ -11,7 +11,7 @@
       <h2>Subjective Question</h2>
       <ul class="list-group">
         {% for question in questions %}
-        <li class="list-group-item"><a href="{% url 'selected_subjective_que' question.id %}" style="color:black;">
+        <li class="list-group-item">{{ forloop.counter }}. <a href="{% url 'selected_subjective_que' question.id %}" style="color:black;">
           <pre>{{question}}</pre></a></li>
         {% endfor %}
       </ul>
