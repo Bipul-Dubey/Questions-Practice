@@ -12,9 +12,20 @@ https://docs.djangoproject.com/en/4.0/ref/settings/
 
 import os
 from pathlib import Path
+<<<<<<< HEAD
 # import django_heroku
+=======
+>>>>>>> 51ec82601f92903a2dc3df46ebc3897732ca4613
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
+
+# email settings
+from .info import *
+EMAIL_USE_TLS=EMAIL_USE_TLS
+EMAIL_HOST=EMAIL_HOST
+EMAIL_HOST_USER=EMAIL_HOST_USER
+EMAIL_HOST_PASSWORD=EMAIL_HOST_PASSWORD
+EMAIL_PORT=EMAIL_PORT
 
 
 # Quick-start development settings - unsuitable for production
@@ -26,7 +37,10 @@ SECRET_KEY = 'django-insecure-yx_&ky9m))m)@5t^78%gx!flbt@1bj=89y@&#h+e5&%w369j^%
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
+<<<<<<< HEAD
 # ALLOWED_HOSTS = ["questions-practice.heroku.com"]
+=======
+>>>>>>> 51ec82601f92903a2dc3df46ebc3897732ca4613
 ALLOWED_HOSTS = []
 
 
@@ -133,8 +147,11 @@ AUTH_USER_MODEL='Application.NewUser'
 MEDIA_ROOT=os.path.join(BASE_DIR,'media')
 MEDIA_URL='/media/'
 
+<<<<<<< HEAD
 # django_heroku.settings(locals())
 
+=======
+>>>>>>> 51ec82601f92903a2dc3df46ebc3897732ca4613
 GRAPH_MODELS = {
   'all_applications': True,
   'group_models': True,
